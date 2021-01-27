@@ -1,0 +1,50 @@
+form{
+    border: 2px dashed lightgray;
+}
+
+div.cityDetails{
+    border:2px dashed lightgray;
+}
+
+span.blue{
+    background-color: royalblue;
+    
+}
+
+
+div.cityDetails{
+    display: block;
+}
+
+#uv{
+    padding: 5px;
+    background-color: red;
+    border-radius: 15%;
+}
+
+.fa-search{
+    color: white;
+}
+
+div.extended{
+    border: 2px dotted lightgray;
+    display: block;
+}
+div.fiveDay{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: royalblue;
+    color:white;
+    min-height: 175px;
+    min-width: 150px;
+    display:block;
+    font-size: 19px;
+
+}
+div.currentLoc{
+    display:flex;
+}
+
+
+
+
