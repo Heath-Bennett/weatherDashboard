@@ -14,11 +14,8 @@ $(document).ready(function(){
 
   const UV = $("#uv");
   let histArray = [];
-
-  
   
   let currentDay = date.toLocaleString({locale: 'en-us'});
-
   
   let day1 = date.plus({days: 1}).toLocaleString({locale: 'en-us'});
   let day2 = date.plus({days: 2}).toLocaleString({locale: 'en-us'});
@@ -37,12 +34,11 @@ $(document).ready(function(){
   
   const cityName = $("div.currentLoc > p");
   const button = $("span.blue");
-
-
+  const displayHistory = $("#searchHistory");
   
-
   //This function populates fiveDay
   let populates = function(response){
+    cityName.text(entry);
     for (let i = 0; i < 5; i++){
       $("#temp" + i).text(parseInt(response.daily[i].temp.day));
       $("#humid" + i).text(parseInt(response.daily[i].humidity));
@@ -91,7 +87,6 @@ $(document).ready(function(){
     }
   }
   
-
   //This function populates current weather's Icon
   let currentWeatherIcon = function(response){
     let currDayIcon = response.weather[0].icon;
@@ -168,12 +163,20 @@ $(document).ready(function(){
     entry = userInput;
     getWeather();
     addToHistory(entry);
+    displayHistory.append("<span>" + entry + "</span><br>");
   }
 
   //this function stores search entry in history
   let addToHistory = function (city){
     histArray.push(city)
     localStorage.setItem("history", JSON.stringify(histArray));
+  }
+
+  //this function displays cities searched for
+  let displayCities = function(){
+    for (let j = 0; j < histArray.length; j++){
+      displayHistory.append("<span>" + histArray[j] + "</span><br>");
+    }
   }
 
   //this function retrieves data from history
@@ -183,6 +186,7 @@ $(document).ready(function(){
       histArray = retrieve;
       entry = histArray[histArray.length-1];
       getWeather();
+      displayCities();
     }
   }
   
@@ -203,7 +207,6 @@ $(document).ready(function(){
         lat = response.coord.lat;
 
         currentWeatherIcon(response);
-        
         
         const queryURLTwo = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
         $.ajax({
@@ -228,6 +231,8 @@ $(document).ready(function(){
 
           uVColor(uvValue);
           populates(responseTwo);  
+
+          
         });
       });
     
