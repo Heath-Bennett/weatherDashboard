@@ -1,10 +1,9 @@
 $(document).ready(function(){
   let lon = "";
   let lat = "";
-  let index = null;
   let city = "";
-  let state = "";
-  let userInput = "";
+  
+  
   let entry = "";
 
   let now = luxon.DateTime;
@@ -14,6 +13,7 @@ $(document).ready(function(){
   // let year = date.year;
 
   const UV = $("#uv");
+  let histArray = [];
 
   
   
@@ -38,46 +38,8 @@ $(document).ready(function(){
   const cityName = $("div.currentLoc > p");
   const button = $("span.blue");
 
-  //This function retrieves info from local storage and populates the page with it
-  let init = function(){
-    entry = localStorage.getItem("lastEntry");
-    city = localStorage.getItem("city");
-    console.log("entry: ", entry);
-    cityName.text(city);
-    getWeather();
-  }
+
   
-  //This function receives userInput and separates it into city and state. 
-  let getCityState = function(){
-
-    userInput = $("input.form-control").val();
-
-    if (userInput){
-      
-      userInput = userInput.toLowerCase();
-      for (let i = 0; i < userInput.length; i++){
-        if (userInput.charAt(i) === ","){
-          index = i; 
-        }
-      }
-  
-      if (index === null){
-        console.log("null");
-      }
-  
-      city = userInput.slice(0, index);
-      state = userInput.slice(index +1);
-      state = state.trim();
-      entry = city + "," + state;
-    }
-    
-   
-
-    localStorage.setItem("lastEntry", entry);
-    localStorage.setItem("city", city);
-    console.log("lastEntry: ", entry);
-
-  }
 
   //This function populates fiveDay
   let populates = function(response){
@@ -126,11 +88,7 @@ $(document).ready(function(){
           $("#img" + i).attr({"src": srcHtml, "alt": "Mist"});
           break;
       }
-
-      
     }
-
-    
   }
   
 
@@ -138,7 +96,6 @@ $(document).ready(function(){
   let currentWeatherIcon = function(response){
     let currDayIcon = response.weather[0].icon;
     let srcHtml2 = ("http://openweathermap.org/img/wn/" + currDayIcon + ".png");
-    console.log(currDayIcon);
 
     switch (currDayIcon){
       case "01d":
@@ -182,6 +139,7 @@ $(document).ready(function(){
 
   //This function properly colors UV Index
   let uVColor = function(uvRating){
+    
     if (uvRating < 3.0){
       UV.css("background-color", "green");
       UV.css("color", "white");
@@ -191,7 +149,7 @@ $(document).ready(function(){
       UV.css("color", "black");
     }
     else if (uvRating < 8.0){
-      UV.css("background-color", "orange");
+      UV.css("background-color", "orange");    
       UV.css("color", "black");
     }
     else if (uvRating < 11.0){
@@ -203,18 +161,36 @@ $(document).ready(function(){
       UV.css("color", "white");
     }
   }
+
+  //this function gets userInput and calls get Weather
+  let getUserInput = function (){
+    let userInput = $("input.form-control").val();
+    entry = userInput;
+    getWeather();
+    addToHistory(entry);
+  }
+
+  //this function stores search entry in history
+  let addToHistory = function (city){
+    histArray.push(city)
+    localStorage.setItem("history", JSON.stringify(histArray));
+  }
+
+  //this function retrieves data from history
+  let init = function (){
+    let retrieve = JSON.parse(localStorage.getItem("history"));
+    if (retrieve !== null && retrieve !== []){
+      histArray = retrieve;
+      entry = histArray[histArray.length-1];
+      getWeather();
+    }
+  }
   
-  //This function calls the functions and API requests
+  //This function makes the API requests
   let getWeather = function(){
 
     
-    getCityState();
-    
-
-    
-    
-    
-    const queryURLOne = "https://api.openweathermap.org/data/2.5/weather?q="+ entry + ",840&appid=" + APIKey + "&units=imperial";
+    const queryURLOne = "https://api.openweathermap.org/data/2.5/weather?q="+ entry + "&appid=" + APIKey + "&units=imperial";
     
     $.ajax({
       url: queryURLOne,
@@ -227,7 +203,7 @@ $(document).ready(function(){
         lat = response.coord.lat;
 
         currentWeatherIcon(response);
-        console.log(response);
+        
         
         const queryURLTwo = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
         $.ajax({
@@ -245,21 +221,20 @@ $(document).ready(function(){
           $("#wind").text(wndSpd);
 
           let uvValue = parseFloat(responseTwo.current.uvi);
+          
           UV.text(uvValue);
           
           cityName.text(city);
 
           uVColor(uvValue);
-          populates(responseTwo);
-
-      
-          
-          
+          populates(responseTwo);  
         });
       });
+    
   }
 
   init();
-  button.on("click", getWeather);
+  button.on("click", getUserInput);
+  
 
 });

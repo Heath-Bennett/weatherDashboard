@@ -45,6 +45,14 @@ div.currentLoc{
     display:flex;
 }
 
+div.cityDetails{
+    display: block;
+}
+
+#searchHistory > p {
+    border: 2px solid lightgray;
+}
+
 
 
 
