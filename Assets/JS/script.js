@@ -2,15 +2,9 @@ $(document).ready(function(){
   let lon = "";
   let lat = "";
   let city = "";
-  
-  
   let entry = "";
-
   let now = luxon.DateTime;
   let date= now.local();
-  // let month = date.month;
-  // let day = date.day;
-  // let year = date.year;
 
   const UV = $("#uv");
   let histArray = [];
@@ -23,7 +17,7 @@ $(document).ready(function(){
   let day4 = date.plus({days: 4}).toLocaleString({locale: 'en-us'});
   let day5 = date.plus({days: 5}).toLocaleString({locale: 'en-us'});
 
-  $("div.currentLoc > span").text(currentDay);
+  $("div.currentLoc > span").text("("+ currentDay + ")");
   $("#dateOne").text(day1);
   $("#dateTwo").text(day2);
   $("#dateThree").text(day3);
@@ -33,8 +27,9 @@ $(document).ready(function(){
   const APIKey = "d8a66d784d55a0943c5edc1ccf69c69b";
   
   const cityName = $("div.currentLoc > p");
-  const button = $("span.blue");
+  const button = $("button.blue");
   const displayHistory = $("#searchHistory");
+  let historyButton = $("#searchHistory > span");
   
   //This function populates fiveDay
   let populates = function(response){
@@ -160,10 +155,14 @@ $(document).ready(function(){
   //this function gets userInput and calls get Weather
   let getUserInput = function (){
     let userInput = $("input.form-control").val();
-    entry = userInput;
+    entry = userInput.trim();
+    while (/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/.test(entry) === false){
+      userInput = prompt("Please enter a valid city name.")
+      entry = userInput.trim();
+    }
     getWeather();
     addToHistory(entry);
-    displayHistory.append("<span>" + entry + "</span><br>");
+    displayHistory.append("<button class='btnHist' value='" + entry + "'>" + entry + "</button><br>");
   }
 
   //this function stores search entry in history
@@ -175,7 +174,7 @@ $(document).ready(function(){
   //this function displays cities searched for
   let displayCities = function(){
     for (let j = 0; j < histArray.length; j++){
-      displayHistory.append("<span>" + histArray[j] + "</span><br>");
+      displayHistory.append("<button class='btnHist' value='" + histArray[j] + "'>" + histArray[j] + "</button><br>");
     }
   }
 
@@ -207,6 +206,7 @@ $(document).ready(function(){
         lat = response.coord.lat;
 
         currentWeatherIcon(response);
+        console.log(response)
         
         const queryURLTwo = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
         $.ajax({
@@ -240,6 +240,9 @@ $(document).ready(function(){
 
   init();
   button.on("click", getUserInput);
-  
+
+  displayHistory.on("click", ".btnHist", function(){
+    console.log($(this).attr("value"));
+  });
 
 });
