@@ -243,6 +243,8 @@ $(document).ready(function(){
 
   displayHistory.on("click", ".btnHist", function(){
     console.log($(this).attr("value"));
+    entry = $(this).attr("value");
+    getWeather();
   });
 
 });
