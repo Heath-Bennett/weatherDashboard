@@ -4,6 +4,9 @@
 
 This site displays the weather for the city entered by user.  The user is presented with the current weather as well as the five day forecast.  All cities searched for are saved in history. 
 
+[Link to GitHub repository](https://github.com/Heath-Bennett/weatherDashboard)
+
+[Link to deployed page](https://heath-bennett.github.io/weatherDashboard/)
 
 ## Table of Contents
 
@@ -37,7 +40,7 @@ The current weather displays the city searched for, the date, icon representatio
 
 The UV rating is displayed using the Global Solar UV Index. A rating of 1-2 is low, 3-5 is moderate, 6-7 is high, 8-10 is very high, 11+ is extreme.  These are colored with low being green, moderate is yellow, high is orange, very high is red, and extreme is purple.
 
-![Imagee of Global Solar UV Index](./Assets/Images/UVRating.png)
+![Image of Global Solar UV Index](./Assets/Images/UVrating.png)
 
 This chart was retrieved from:
 
@@ -58,7 +61,7 @@ The colors were chosen using [Adobe Color](color.adobe.com)
 
 ## Collaborators
 
-Thank you Tristan LaRoche for helping me straightening out my issues with search history!
+Thank you Tristan LaRoche for helping me straighten out my issues with search history!
 
 ## How I would like to improve the project
 
