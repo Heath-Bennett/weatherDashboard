@@ -206,7 +206,7 @@ $(document).ready(function(){
         lat = response.coord.lat;
 
         currentWeatherIcon(response);
-        console.log(response)
+        
         
         const queryURLTwo = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
         $.ajax({
@@ -242,7 +242,6 @@ $(document).ready(function(){
   button.on("click", getUserInput);
 
   displayHistory.on("click", ".btnHist", function(){
-    console.log($(this).attr("value"));
     entry = $(this).attr("value");
     getWeather();
   });
