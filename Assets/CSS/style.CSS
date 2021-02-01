@@ -1,0 +1,104 @@
+body {
+    background-color: #9BA685;
+}
+
+h1{
+    text-align: center;
+    font-size: 60px;
+    padding:20px;
+    background-color: #708C84;
+    border-bottom: 2px solid lightgray;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+button.blue{
+    background-color: #708C84;
+}
+
+div.input-group{
+    margin-bottom:20px;
+}
+
+#uv{
+    padding: 8px;
+    background-color: red;
+    border-radius: 15%;
+}
+
+.fa-search{
+    color: white;
+}
+
+div.extended{
+    font-weight: 600;
+    margin-top: 18px;
+    font-size: 28px;
+}
+
+div.fiveDay{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #708C84;
+    border: 2px solid lightgray;
+    color:white;
+    min-height: 175px;
+    min-width: 150px;
+    display:block;
+    font-size: 19px;
+}
+
+div.currentLoc{
+    display:flex;
+}
+
+div.currentLoc > p {
+    font-size: 34px;
+}
+
+div.currentLoc > span {
+    font-size: 34px;
+    margin-left:10px;
+}
+
+div.cityDetails{
+    display: block;
+    padding:20px;
+    font-weight:600;
+    background-color: #BFAA69;
+    color: white;
+    border: 2px solid #0D0D0D;
+}
+
+#searchHistory > span {
+    border: 2px solid lightgray;
+}
+
+button.btnHist{
+    width:254px;
+    height:40px;
+    text-align: left;
+    padding-left: 20px;
+    border: 1px solid #2E2D3D;
+    background-color: #D9AC59;
+    color: white;
+}
+
+p.currInfo{
+    font-size: 18px;
+}
+
+div.weather{
+    position: relative;
+    top:8px;
+}
+
+p.humid{
+    font-size: 16px;
+}
+
+
+
+
