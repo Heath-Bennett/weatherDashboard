@@ -100,8 +100,9 @@ p.humid{
 }
 
 div.container {
-    position: relative;
-    top:40px;
+    /* position: relative;
+    top:40px; */
+    align-content: center;
 }
 
 
